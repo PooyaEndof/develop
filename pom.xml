@@ -9,10 +9,14 @@
     </parent>
     <groupId>ir.snappay</groupId>
     <artifactId>tax_parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>tax_parent</name>
     <description>tax_parent</description>
-
+    <packaging>pom</packaging>
+    <modules>
+        <module>common</module>
+        <module>tax</module>
+    </modules>
     <properties>
         <java.version>24</java.version>
     </properties>
@@ -24,7 +28,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-
         </dependency>
 
         <dependency>
@@ -34,10 +37,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
