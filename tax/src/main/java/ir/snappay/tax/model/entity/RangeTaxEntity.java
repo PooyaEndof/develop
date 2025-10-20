@@ -1,10 +1,7 @@
 package ir.snappay.tax.model.entity;
 
 import ir.snappay.common.base.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -12,9 +9,17 @@ import lombok.Data;
 @Data
 public class RangeTaxEntity extends BaseEntity {
     @Id
+    @SequenceGenerator(name = "RANGE_TAX_SEQ")
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "RANGE_TAX_SEQ")
     private Long id;
+
     @Column(name="HIGH_RANGE")
     private Double highRange;
+
     @Column(name="LOW_RANGE")
     private Double lowRange;
+
+    @Column(name="PERCENT")
+    private Double percent;
+
 }
