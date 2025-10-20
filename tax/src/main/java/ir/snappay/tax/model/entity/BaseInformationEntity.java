@@ -9,8 +9,6 @@ import lombok.Data;
 @Data
 public class BaseInformationEntity extends BaseEntity {
     @Id
-    @SequenceGenerator(name = "BASE_INFORMATION_SEQ")
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "BASE_INFORMATION_SEQ")
     private Long id;
     @Column(name = "BASE_NAME")
     private String name;

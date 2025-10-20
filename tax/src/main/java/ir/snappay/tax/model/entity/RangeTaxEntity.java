@@ -9,8 +9,6 @@ import lombok.Data;
 @Data
 public class RangeTaxEntity extends BaseEntity {
     @Id
-    @SequenceGenerator(name = "RANGE_TAX_SEQ")
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "RANGE_TAX_SEQ")
     private Long id;
 
     @Column(name="HIGH_RANGE")
