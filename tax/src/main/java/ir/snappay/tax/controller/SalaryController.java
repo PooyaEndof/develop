@@ -1,4 +1,4 @@
-﻿package ir.snappay.tax.controller;
+package ir.snappay.tax.controller;
 
 import ir.snappay.tax.dto.RequestDto;
 import ir.snappay.tax.dto.ResponseDto;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SalaryController {
 
     private final CalculateSalaryService service;
+
     @PostMapping("/operation")
     public ResponseEntity<ResponseDto> operation(@Valid@RequestBody RequestDto requestDto) {
         return new ResponseEntity<>(service.operate(requestDto),HttpStatus.OK);

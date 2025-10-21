@@ -32,16 +32,16 @@ public class CalculateSalaryServiceImpl implements CalculateSalaryService {
         double transport=baseInformationEntityList.stream().filter((x)->x.getName().equals("transport"))
                 .map(BaseInformationEntity::getAmount).findFirst().orElse(0d);
         double tax=calculateTax(requestDto.getTotalSalary()-homeAmount-transport); // that salary must minus from total like transport and home
-        double insurance=insurancePercent*requestDto.getTotalSalary();
+        double insurance=requestDto.getTotalSalary() * insurancePercent/100;
         return ResponseDto.builder().totalSalary(requestDto.getTotalSalary()).insurance(insurance).tax(tax)
                 .netSalary(requestDto.getTotalSalary()-tax-insurance).build();
     }
 
-    double calculateTax(double salary) {
-        List<RangeTaxEntity> list=taxRepository.findByLowRangeGreaterThanOrderByLowRangeAsc(salary);
+    private double calculateTax(double salary) {
+        List<RangeTaxEntity> list=taxRepository.findByLowRangeLessThanOrderByLowRangeAsc(salary);
         return list.parallelStream().map((rangeTaxEntity)-> {
-            double highRange = rangeTaxEntity.getHighRange() > salary ? rangeTaxEntity.getHighRange() : salary;
-            return (highRange - rangeTaxEntity.getLowRange()) * rangeTaxEntity.getPercent();
+            double highRange = rangeTaxEntity.getHighRange() > salary ? salary : rangeTaxEntity.getHighRange();
+            return (highRange - rangeTaxEntity.getLowRange()) * rangeTaxEntity.getPercent()/100;
         }).reduce(Double::sum).orElse(0d);
 
     }

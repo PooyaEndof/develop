@@ -10,9 +10,6 @@
     <artifactId>common</artifactId>
     <name>common</name>
     <description>common</description>
-    <properties>
-        <java.version>24</java.version>
-    </properties>
     <build>
         <plugins>
             <plugin>

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface RangeTaxRepository extends JpaRepository<RangeTaxEntity,Long> {
-    List<RangeTaxEntity> findByLowRangeGreaterThanOrderByLowRangeAsc(double lowRange);
+    List<RangeTaxEntity> findByLowRangeLessThanOrderByLowRangeAsc(double lowRange);
 }

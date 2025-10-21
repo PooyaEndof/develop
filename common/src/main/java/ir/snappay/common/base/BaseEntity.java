@@ -8,16 +8,17 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
 public class BaseEntity {
     @CreatedDate
-    private LocalDate createDate;
+    private LocalDateTime createDate;
     @LastModifiedDate
-    private LocalDate modifiedDate;
+    private LocalDateTime modifyDate;
     @CreatedBy
-    private String createdBy;
+    private String createBy;
     @LastModifiedBy
-    private String modifiedBy;
+    private String modifyBy;
 }
