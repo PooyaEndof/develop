@@ -44,6 +44,5 @@ public class CalculateSalaryServiceImpl implements CalculateSalaryService {
                     rangeTaxEntity.getHighRange() : salary;
             return (highRange - rangeTaxEntity.getLowRange()) * rangeTaxEntity.getPercent()/100;
         }).reduce(Double::sum).orElse(0d);
-
     }
 }
