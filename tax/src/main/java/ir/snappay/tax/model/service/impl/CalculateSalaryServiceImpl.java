@@ -40,7 +40,8 @@ public class CalculateSalaryServiceImpl implements CalculateSalaryService {
     private double calculateTax(double salary) {
         List<RangeTaxEntity> list=taxRepository.findByLowRangeLessThanOrderByLowRangeAsc(salary);
         return list.parallelStream().map((rangeTaxEntity)-> {
-            double highRange = rangeTaxEntity.getHighRange() > salary ? salary : rangeTaxEntity.getHighRange();
+            double highRange = rangeTaxEntity.getHighRange() !=null && rangeTaxEntity.getHighRange() < salary ?
+                    rangeTaxEntity.getHighRange() : salary;
             return (highRange - rangeTaxEntity.getLowRange()) * rangeTaxEntity.getPercent()/100;
         }).reduce(Double::sum).orElse(0d);
 
