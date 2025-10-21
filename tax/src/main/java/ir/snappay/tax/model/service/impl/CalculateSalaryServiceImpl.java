@@ -3,6 +3,7 @@ package ir.snappay.tax.model.service.impl;
 import ir.snappay.tax.dto.RequestDto;
 import ir.snappay.tax.dto.ResponseDto;
 import ir.snappay.tax.model.entity.BaseInformationEntity;
+import ir.snappay.tax.model.entity.RangeTaxEntity;
 import ir.snappay.tax.model.repository.BaseInformationRepository;
 import ir.snappay.tax.model.repository.RangeTaxRepository;
 import ir.snappay.tax.model.service.CalculateSalaryService;
@@ -30,7 +31,18 @@ public class CalculateSalaryServiceImpl implements CalculateSalaryService {
                 .map(BaseInformationEntity::getAmount).findFirst().orElse(0d);
         double transport=baseInformationEntityList.stream().filter((x)->x.getName().equals("transport"))
                 .map(BaseInformationEntity::getAmount).findFirst().orElse(0d);
-        //requestDto.getTotalSalary() *
-        return null;
+        double tax=calculateTax(requestDto.getTotalSalary()-homeAmount-transport); // that salary must minus from total like transport and home
+        double insurance=insurancePercent*requestDto.getTotalSalary();
+        return ResponseDto.builder().totalSalary(requestDto.getTotalSalary()).insurance(insurance).tax(tax)
+                .netSalary(requestDto.getTotalSalary()-tax-insurance).build();
+    }
+
+    double calculateTax(double salary) {
+        List<RangeTaxEntity> list=taxRepository.findByLowRangeGreaterThanOrderByLowRangeAsc(salary);
+        return list.parallelStream().map((rangeTaxEntity)-> {
+            double highRange = rangeTaxEntity.getHighRange() > salary ? rangeTaxEntity.getHighRange() : salary;
+            return (highRange - rangeTaxEntity.getLowRange()) * rangeTaxEntity.getPercent();
+        }).reduce(Double::sum).orElse(0d);
+
     }
 }
