@@ -20,7 +20,7 @@ public class SalaryController {
     private final CalculateSalaryService service;
 
     @PostMapping("/operation")
-    public ResponseEntity<ResponseDto> operation(@Valid@RequestBody RequestDto requestDto) {
+    public ResponseEntity<ResponseDto> operation(@Valid @RequestBody RequestDto requestDto) {
         return new ResponseEntity<>(service.operate(requestDto),HttpStatus.OK);
     }
 }

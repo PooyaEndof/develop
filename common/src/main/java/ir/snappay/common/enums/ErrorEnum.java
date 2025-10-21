@@ -13,4 +13,13 @@ public enum ErrorEnum {
         this.code = code;
         this.key = key;
     }
+
+    public static ErrorEnum resolve(String key) {
+        for (ErrorEnum errorEnum : ErrorEnum.values()) {
+            if (errorEnum.getKey().equals(key)) {
+                return errorEnum;
+            }
+        }
+        return null;
+    }
 }
