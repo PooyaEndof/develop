@@ -1,0 +1,22 @@
+
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+              - id: tax
+                uri: 'http://localhost:8080'
+                predicates:
+                  - name: Path
+                    args:
+                      pattern: /tax/**
+
+
+
+server:
+  port: 8000
+
